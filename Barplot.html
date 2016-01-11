@@ -7,11 +7,11 @@ body {
 }
 
 .y.axisRight text {
-    fill: orange;
+    fill: #F91826;
 }
 
 .y.axisLeft text {
-    fill: steelblue;
+    fill: #5E809C;
 }
 
 .axis path,
@@ -22,11 +22,11 @@ body {
 }
 
 .bar1 {
-  fill: steelblue;
+  fill: #5E809C;
 }
 
 .bar2 {
-  fill: orange;
+  fill: #F91826;
 }
 
 .x.axis path {
@@ -38,42 +38,126 @@ body {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 var values = [{
-  "year": "bin1",
-  "money": 550,
-  "number": 35  
+  "Bin": " bin.001 " , 
+  "Completeness": 100.00 , 
+  "Contamination": 2.59 
 }, {
-  "year": 2006,
-  "money": 600,
-  "number": 40  
+  "Bin": " bin.002 " , 
+  "Completeness": 2.12 , 
+  "Contamination": 0.00 
 }, {
-  "year": 2007,
-  "money": 700,
-  "number": 45  
+  "Bin": " bin.003 " , 
+  "Completeness": 78.21 , 
+  "Contamination": 2.04 
 }, {
-  "year": 2008,
-  "money": 800,
-  "number": 60  
+  "Bin": " bin.004 " , 
+  "Completeness": 100.00 , 
+  "Contamination": 2.59 
 }, {
-  "year": 2009,
-  "money": 900,
-  "number": 70  
+  "Bin": " bin.005 " , 
+  "Completeness": 28.62 , 
+  "Contamination": 8.23 
 }, {
-  "year": 2010,
-  "money": 850,
-  "number": 65  
+  "Bin": " bin.006 " , 
+  "Completeness": 14.66 , 
+  "Contamination": 0.00 
 }, {
-  "year": 2011,
-  "money": 880,
-  "number": 67  
+  "Bin": " bin.007 " , 
+  "Completeness": 29.31 , 
+  "Contamination": 6.90 
 }, {
-  "year": 2012,
-  "money": 900,
-  "number": 70  
+  "Bin": " bin.008 " , 
+  "Completeness": 12.41 , 
+  "Contamination": 0.00 
 }, {
-  "year": 2013,
-  "money": 1000,
-  "number": 75  
+  "Bin": " bin.009 " , 
+  "Completeness": 49.06 , 
+  "Contamination": 18.97 
+}, {
+  "Bin": " bin.010 " , 
+  "Completeness": 100.00 , 
+  "Contamination": 2.65 
+}, {
+  "Bin": " bin.011 " , 
+  "Completeness": 0.00 , 
+  "Contamination": 0.00 
+}, {
+  "Bin": " bin.012 " , 
+  "Completeness": 96.55 , 
+  "Contamination": 1.72 
+}, {
+  "Bin": " bin.013 " , 
+  "Completeness": 3.45 , 
+  "Contamination": 0.00 
+}, {
+  "Bin": " bin.014 " , 
+  "Completeness": 99.84 , 
+  "Contamination": 13.01 
+}, {
+  "Bin": " bin.015 " , 
+  "Completeness": 100.00 , 
+  "Contamination": 7.92 
+}, {
+  "Bin": " bin.016 " , 
+  "Completeness": 95.69 , 
+  "Contamination": 35.58 
+}, {
+  "Bin": " bin.017 " , 
+  "Completeness": 97.41 , 
+  "Contamination": 0.00 
+}, {
+  "Bin": " bin.018 " , 
+  "Completeness": 85.42 , 
+  "Contamination": 15.52 
+}, {
+  "Bin": " bin.019 " , 
+  "Completeness": 77.51 , 
+  "Contamination": 1.88 
+}, {
+  "Bin": " bin.020 " , 
+  "Completeness": 92.48 , 
+  "Contamination": 15.52 
+}, {
+  "Bin": " bin.021 " , 
+  "Completeness": 51.66 , 
+  "Contamination": 5.96 
+}, {
+  "Bin": " bin.022 " , 
+  "Completeness": 100.00 , 
+  "Contamination": 1.72 
+}, {
+  "Bin": " bin.023 " , 
+  "Completeness": 58.21 , 
+  "Contamination": 8.93 
+}, {
+  "Bin": " bin.024 " , 
+  "Completeness": 17.16 , 
+  "Contamination": 3.45 
+}, {
+  "Bin": " bin.025 " , 
+  "Completeness": 56.47 , 
+  "Contamination": 6.43 
+}, {
+  "Bin": " bin.026 " , 
+  "Completeness": 98.28 , 
+  "Contamination": 0.16 
+}, {
+  "Bin": " bin.027 " , 
+  "Completeness": 98.28 , 
+  "Contamination": 1.18 
+}, {
+  "Bin": " bin.028 " , 
+  "Completeness": 71.00 , 
+  "Contamination": 3.61 
+}, {
+  "Bin": " bin.029 " , 
+  "Completeness": 98.28 , 
+  "Contamination": 1.72 
 }];
+
+var xValue = "Bin",
+    yValue1 = "Completeness",
+    yValue2 = "Contamination"
 
 var margin = {top: 80, right: 80, bottom: 80, left: 80},
     width = 600 - margin.left - margin.right,
@@ -82,16 +166,14 @@ var margin = {top: 80, right: 80, bottom: 80, left: 80},
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
 
-var y0 = d3.scale.linear().domain([300, 1100]).range([height, 0]),
-y1 = d3.scale.linear().domain([20, 80]).range([height, 0]);
+var y0 = d3.scale.linear().domain([0, 100]).range([height, 0]),
+y1 = d3.scale.linear().domain([0, 100]).range([height, 0]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-// create left yAxis
 var yAxisLeft = d3.svg.axis().scale(y0).ticks(4).orient("left");
-// create right yAxis
 var yAxisRight = d3.svg.axis().scale(y1).ticks(6).orient("right");
 
 var svg = d3.select("body").append("svg")
@@ -101,55 +183,60 @@ var svg = d3.select("body").append("svg")
     .attr("class", "graph")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  x.domain(values.map(function(d) { return d.year; }));
-  y0.domain([0, d3.max(values, function(d) { return d.money; })]);
+  x.domain(values.map(function(d) { return d[xValue]; }));
+  y0.domain([0, d3.max(values, function(d) { return d[yValue1]; })]);
   
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)" );
 
   svg.append("g")
-	  .attr("class", "y axis axisLeft")
-	  .attr("transform", "translate(0,0)")
-	  .call(yAxisLeft)
-	.append("text")
-	  .attr("y", 6)
-	  .attr("dy", "-2em")
-	  .style("text-anchor", "end")
-	  .style("text-anchor", "end")
-	  .text("Dollars");
-	
+    .attr("class", "y axis axisLeft")
+    .attr("transform", "translate(0,0)")
+    .call(yAxisLeft)
+  .append("text")
+    .attr("y", 6)
+    .attr("dy", "-2em")
+    .style("text-anchor", "end")
+    .style("text-anchor", "end")
+    .text("Compleetheid");
+  
   svg.append("g")
-	  .attr("class", "y axis axisRight")
-	  .attr("transform", "translate(" + (width) + ",0)")
-	  .call(yAxisRight)
-	.append("text")
-	  .attr("y", 6)
-	  .attr("dy", "-2em")
-	  .attr("dx", "2em")
-	  .style("text-anchor", "end")
-	  .text("#");
+    .attr("class", "y axis axisRight")
+    .attr("transform", "translate(" + (width) + ",0)")
+    .call(yAxisRight)
+  .append("text")
+    .attr("y", 6)
+    .attr("dy", "-2em")
+    .attr("dx", "3em")
+    .style("text-anchor", "end")
+    .text("Contaminatie");
 
   bars = svg.selectAll(".bar").data(values).enter();
 
   bars.append("rect")
       .attr("class", "bar1")
-      .attr("x", function(d) { return x(d.year); })
+      .attr("x", function(d) { return x(d[xValue]); })
       .attr("width", x.rangeBand()/2)
-      .attr("y", function(d) { return y0(d.money); })
-	  .attr("height", function(d,i,j) { return height - y0(d.money); }); 
+      .attr("y", function(d) { return y0(d[yValue1]); })
+    .attr("height", function(d,i,j) { return height - y0(d[yValue1]); }); 
 
   bars.append("rect")
       .attr("class", "bar2")
-      .attr("x", function(d) { return x(d.year) + x.rangeBand()/2; })
+      .attr("x", function(d) { return x(d[xValue]) + x.rangeBand()/2; })
       .attr("width", x.rangeBand() / 2)
-      .attr("y", function(d) { return y1(d.number); })
-	  .attr("height", function(d,i,j) { return height - y1(d.number); }); 
+      .attr("y", function(d) { return y1(d[yValue2]); })
+    .attr("height", function(d,i,j) { return height - y1(d[yValue2]); }); 
 
 
 function type(d) {
-  d.money = +d.money;
+  d[yValue1] = +d[yValue1];
   return d;
 }
 
